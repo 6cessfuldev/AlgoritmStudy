@@ -2,50 +2,49 @@ package com.yuk;
 
 import java.util.Scanner;
 
-public class No1654 {
+public class No2805 {
 
 	public static void main(String[] args) {
 
 		Scanner scan = new Scanner(System.in);
 		
-		int K = scan.nextInt();
 		int N = scan.nextInt();
+		int M = scan.nextInt();
 		
-		int[] arr = new int[K];
 		long max = 0;
 		
-		for (int i = 0; i < K; i++) {
+		int[] arr = new int[N];
+		for (int i = 0; i < N; i++) {
 			arr[i] = scan.nextInt();
-			if(Math.max(max, arr[i]) == arr[i]) {
-				max = arr[i];
-			}
+			if(max < arr[i]) max = arr[i];
 		}
-		
+
 		max++;
 		
 		long min = 0;
 		long mid = 0;
-
+		
 		while (min < max) {
-			
+		
 			mid = (min + max)/2;
-
-			long count = 0;
+			long sum = 0;
 			
 			for (int i = 0; i < arr.length; i++) {
-				count += arr[i] / mid;
+				if(arr[i]-mid>0) {
+					sum += arr[i]-mid;
+				}
 			}
-			
-			if(count >=  N) {
+			if(sum >= M){
 				min = mid+1;
 			} else {
 				max = mid;
 			}
-			
 		}
 		
 		System.out.println(min-1);
-	
+		
+		
+		
 	}
 
 }
