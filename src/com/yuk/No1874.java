@@ -7,42 +7,40 @@ public class No1874 {
 	public static void main(String[] args) {
 
 		Scanner scan = new Scanner(System.in);
+		StringBuilder sb = new StringBuilder();
 		
-		int n = scan.nextInt();
-		
-		Stack stack1 = new Stack(n);
-		
-		Stack stack2 = new Stack(n);
-		for (int i = n; i > 0; i--) {
-			stack2.push(i);
-		}
+		int n = scan.nextInt();	
 		
 		int[] arr = new int[n];
 		for (int i = 0; i < n; i++) {
 			arr[i] = scan.nextInt();
-		}		
+		}
 		
-		// n n-1 사이에는 n-1 보다 낮은 수가 나올 수 없다. 
-		for (int i = 0; i < n-2; i++) {
-			if(arr[i] == arr[i+2]+1 && arr[i+1] <arr[i+2]) {
-				System.out.println("NO");
-				return;
+		Stack stack1 = new Stack(n);
+		
+		int num = 1;
+		int cnt = 0;
+		
+		boolean flag = true;
+		while(cnt<n) {
+			if(stack1.peek()==arr[cnt]) {
+				stack1.pop();
+				cnt++;
+				sb.append("-\n");
+			} else if(arr[cnt] > stack1.peek()) {
+				stack1.push(num++);
+				sb.append("+\n");
+			} else {
+				flag = false;
+				break;
 			}
 		}
 		
-		for (int i = 0; i < arr.length; i++) {
-		System.out.println("정렬 포문");
-			while(stack1.peek() != arr[i]) {
-				if(arr[i] > stack1.peek()) {
-					stack1.push(stack2.pop());
-					System.out.println("+");
-				} else if(arr[i] < stack1.peek()) {
-					stack2.push(stack1.pop());
-					System.out.println("-");
-				}
-			}
+		if(!flag) {
+			System.out.println("NO");
+		} else {
+			System.out.println(sb.toString());
 		}
-		
 	}
 }
 
@@ -76,7 +74,7 @@ class Stack {
 	
 	public int peek () {
 		if(isEmpty()) {
-			return 0;
+			return -1;
 		} else {
 			return stackArr[top];			
 		}
@@ -99,5 +97,4 @@ class Stack {
 			stackArr = new int[this.stackSize];
 		}
 	}
-	
 }
