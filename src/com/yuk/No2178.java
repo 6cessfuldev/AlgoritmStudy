@@ -3,6 +3,9 @@ package com.yuk;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class No2178 {
 
@@ -13,31 +16,34 @@ public class No2178 {
 	static int[][] min;
 	static int[] arrX = {-1, 0, 1, 0};
 	static int[] arrY = {0, -1, 0, 1};
+	static Queue<Xy> queue = new LinkedList<Xy>();
 	
-	public static int go(int x, int y) {
+	public static void bfs() {
 		
-		if(x==0 && y==0) {
-			min[x][y]=1;
-			return 1;
-		}
-		
-		if(!visit[x][y]) {
+		queue.add(new Xy(0,0));
+		visit[0][0]=true;
+		min[0][0]=1;
+
+		while(!queue.isEmpty()) {
 			
-			int mini = Integer.MAX_VALUE;
+			Xy a = queue.poll();
+			
 			for(int i=0; i<4; i++) {
-				int tmpX = x+arrX[i];
-				int tmpY = y+arrY[i];
-				if(tmpX>=0 && tmpX<N && tmpY>=0 && tmpY<M) {
-					if(mini > go(tmpX,tmpY)){
-						mini = go(tmpX,tmpY);
+				
+				int tmpX = a.x+arrX[i];
+				int tmpY = a.y+arrY[i];
+				
+				if(tmpX>=0 && tmpX<N && tmpY>=0 && tmpY<M && map[tmpX][tmpY]=='1' &!visit[tmpX][tmpY]) {
+					queue.add(new Xy(tmpX,tmpY));
+					visit[tmpX][tmpY]=true;
+					min[tmpX][tmpY] = min[a.x][a.y]+1;
+					
+					if(tmpX==N-1 && tmpY==M-1) {
+						System.out.println(min[tmpX][tmpY]);
 					}
 				}
-			}	
-			min[x][y]=mini+1;
-			visit[x][y]=true;
+			}
 		}
-		
-		return min[x][y];
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -59,8 +65,18 @@ public class No2178 {
 			}
 		}
 		
-		go(N-1,M-1);
-		System.out.println(min[N-1][M-1]);
+		bfs();
 		
+	}
+}
+
+class Xy {
+	int x;
+	int y;
+	int count;
+	
+	public Xy(int x, int y) {
+		this.x=x;
+		this.y=y;
 	}
 }
