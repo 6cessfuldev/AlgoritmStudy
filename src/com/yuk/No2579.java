@@ -7,46 +7,109 @@ import java.io.InputStreamReader;
 public class No2579 {
 	
 	static int[] arr;
-	static int[] sum;
-
+	static int[] oneStep;
+	static int[] twoStep;
+ 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
 		
 		arr = new int[n+1];
-		sum = new int[n+1];
+		oneStep = new int[n+1];
+		twoStep = new int[n+1];
 		for (int i = 1; i < n+1; i++) {
 			arr[i]=Integer.parseInt(br.readLine());
 		}
 		
-		System.out.println(dp(n));
+		System.out.println(Math.max(one(n), two(n)));
 		
 	}
 
-	public static int dp(int n) {
+	public static int one(int n) {
 		
-		if(n == 1) {
-			sum[1]=arr[1];
-			return sum[1];
-		}
-		if(n == 2) {
-			sum[2] = arr[1]+arr[2];
-			return sum[2];
-		}
-		
-		if(sum[n] == 0) {
-			//연속 세 개의 계단을 밝아서는 안된다
-			if(dp(n-1)-dp(n-2)==arr[n-1]) {
-				sum[n]=dp(n-2)+arr[n];
+		if(oneStep[n] == 0) {
+			if(n == 1) {
+				oneStep[n] = arr[1];
 			}
 			
-			//첫번째 전 계단, 혹은 두번쨰 전 계단에서 올라와야 한다.
-			else {
-				sum[n]=Math.max(dp(n-1), dp(n-2))+arr[n];				
+			else if(n == 2) {
+				
+				oneStep[n] = arr[1]+arr[2];
+			}
+			
+			else if(n == 3) {
+				oneStep[n] = arr[2]+arr[3];
+			}
+			
+			else if(n > 3) {
+				//전 계단을 이용한 경우
+				oneStep[n] = two(n-1) +arr[n];
 			}
 		}
 		
-		return sum[n];
+		return oneStep[n];
+	}
+	
+	public static int two(int n) {
+		
+		if(twoStep[n] == 0) {
+			if(n == 1) {
+				twoStep[n] = arr[1];
+			}
+			else if(n == 2) {
+				twoStep[n] = arr[2];
+			}
+			else if(n == 3) {
+				twoStep[n] = arr[1]+arr[3];
+			}
+			else if(n > 3) {
+				twoStep[n] = Math.max(one(n-2), two(n-2))+arr[n];
+			}
+		}
+		
+		return twoStep[n];
+		
 	}
 }
+
+
+class Dp {
+	int size;
+	int[] arr;
+	boolean[] visit;
+	
+	public Dp(int size) {
+		arr = new int[size+1];
+		visit = new boolean[size+1];
+	}
+	
+	public void visit(int i, int value) {
+		arr[i] = value;
+		visit[i] = true;
+	}
+	
+	public boolean visitable(int i) {
+		if(i == 1 && i==2) return true;
+		if(visit[i-1]&&visit[i-2]) return false;
+		return true;
+	}
+	
+	public boolean mustVisit(int i) {
+		if(!visit[i-1]&& !visit[i-2]) return true;
+		return false;
+	}
+	
+	public int sum() {
+		int sum = 0;
+		for (int i : arr) {
+			sum+=i;
+		}
+		return sum;
+	}
+}
+
+
+
+
+
