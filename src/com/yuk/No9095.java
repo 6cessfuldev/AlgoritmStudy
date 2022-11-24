@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 
 public class No9095 {
 
-	static int[] arr;
+	static int[] arr = new int[11];
 	
-	public static int sum(int n) {
+	public static int dp(int n) {
 		
 		if(n==1) {
 			arr[1] = 1;
@@ -23,14 +23,9 @@ public class No9095 {
 		if(n==3) {
 			arr[3] = 4;
 		}
-		
-		if(n==4) {
-			// 1 1 1 1
-			// 2 1 1
-			// 1 2 1
-			// 1 1 2
-			// 3 1
-			// 1 3
+
+		if(arr[n]==0) {
+			arr[n] = dp(n-1)+dp(n-2)+dp(n-3);
 		}
 		
 		return arr[n];
@@ -38,15 +33,16 @@ public class No9095 {
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		int T = Integer.parseInt(br.readLine());
 
 		while(T-- > 0) {
 			int n = Integer.parseInt(br.readLine());
-			
+			sb.append(dp(n)).append("\n");
 		}
 		
-		
+		System.out.println(sb);
 		
 	}
 
