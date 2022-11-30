@@ -13,42 +13,24 @@ public class No5525 {
 		int M = Integer.parseInt(br.readLine());
 		String S = br.readLine();
 
-		int[] arr = getArray(S);
-		
-		int sum = 0;
-		for (int i = 0; i < arr.length; i++) {
-			if(arr[i]>0) {
-				sum+= arr[i]-N+1;
+		char[] chArr = S.toCharArray();
+		int[] menu = new int[M];
+		for (int i = 1; i < chArr.length-1; i++) {
+			if(chArr[i]=='O' && chArr[i+1]=='I') {
+				menu[i+1]=menu[i-1]+1;
 			}
 		}
 		
-		System.out.println(sum);
-		
-	}
-	
-	public static int[] getArray(String S) {
-		
-		int[] arr = new int[S.length()];
-		int k =0;
-		int p =0;
-		
-		for (int i = 0; i < S.length()-2; i++) {
-			if(S.substring(i, i+3).equals("IOI")) {
-				p++;
-				i++;
-			}else {
-				if(p>0) {
-					arr[k++]=p;
-					p=0;
-				}else {
-					arr[k++]=0;					
+		int ans = 0;
+		for (int i = 0; i < menu.length; i++) {
+			if(menu[i]>=N) {
+				if(chArr[i-2*N]=='I') {
+					ans++;
 				}
 			}
 		}
-		if(p>0) {
-			arr[k]=p;
-		}
 		
-		return arr;
+		System.out.println(ans);
 	}
+	
 }
