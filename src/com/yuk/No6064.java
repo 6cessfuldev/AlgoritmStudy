@@ -26,8 +26,8 @@ public class No6064 {
 			String[] strArr = br.readLine().split(" ");
 			int M = Integer.parseInt(strArr[0]);
 			int N = Integer.parseInt(strArr[1]);
-			int x = Integer.parseInt(strArr[2]);
-			int y = Integer.parseInt(strArr[3]);
+			int x = Integer.parseInt(strArr[2])-1;
+			int y = Integer.parseInt(strArr[3])-1;
 			
 			int gcd = 0;
 			if(M>N) {
@@ -37,21 +37,10 @@ public class No6064 {
 			}
 			int lcm = M*N/gcd;
 			
-			int[] arrx = new int[lcm+1];
-			int[] arry = new int[lcm+1];			
-			
-			for (int i = 1; i <= lcm; i++) {
-				arrx[i] = (i-1)%N+1;
-			}
-
-//			for (int i = 0; i < arrx.length; i++) {
-//				System.out.print(i + " " +arrx[i]+" ");
-//			}
-			
 			int rs = 0;
-			for (int i = x; i < arrx.length; i+=M) {
-				if(arrx[i] == y) {
-					rs = i;
+			for (int i = x; i <= lcm; i+=M) {
+				if(i%N == y) {
+					rs = i+1;
 					break;
 				}
 			}			
