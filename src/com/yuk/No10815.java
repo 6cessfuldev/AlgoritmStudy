@@ -14,11 +14,9 @@ public class No10815 {
 		
 		while (lo<hi) {
 			int mid = (lo+hi)/2;
-			System.out.println();
-			System.out.println("lo "+ lo);
-			System.out.println("mid "+mid);
-			System.out.println("hi "+ hi);
-			if(mid == key) return true;
+			if(arr[mid] == key) {
+				return true;
+			}
 			else if(key < arr[mid]) {
 				hi = mid;
 			} else {
@@ -45,7 +43,6 @@ public class No10815 {
 		stk = new StringTokenizer(br.readLine());
 		for (int i = 0; i < m; i++) {
 			int target = Integer.parseInt(stk.nextToken());
-			System.out.println("target : "+target);
 			if(binaryFind(arr, target)) {
 				sb.append("1 ");
 			}else {
