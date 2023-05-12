@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class No11727 {
+public class No11726 {
 	
 	static int[] arr ;
 	
@@ -15,11 +15,7 @@ public class No11727 {
 			if(n == 1) {
 				arr[n] = 1;
 			}else if(n == 2) {
-				arr[n] = 3;
-			}else if(n == 3){
-				arr[n] = cnt(n-2)*3*2+cnt(n-2);
-			}else if(n == 4){
-				arr[n] = cnt(n-2)*3*2+cnt(n-2);
+				arr[n] = 2;
 			}else {
 				arr[n] = (cnt(n-1)+cnt(n-2))%10007;
 			}
