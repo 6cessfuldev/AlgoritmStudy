@@ -17,11 +17,11 @@ public class No11727 {
 			}else if(n == 2) {
 				arr[n] = 3;
 			}else if(n == 3){
-				arr[n] = cnt(n-2)*3*2+cnt(n-2);
+				arr[n] = 5;
 			}else if(n == 4){
-				arr[n] = cnt(n-2)*3*2+cnt(n-2);
+				arr[n] = 2*cnt(n-2)+cnt(n-1);
 			}else {
-				arr[n] = (cnt(n-1)+cnt(n-2))%10007;
+				arr[n] = (2*cnt(n-2)%10007+cnt(n-1)%10007)%10007;
 			}
 		}
 		
@@ -37,7 +37,7 @@ public class No11727 {
 		
 		arr = new int[1001];
 		
-		System.out.println(cnt(n)%10007);
+		System.out.println(cnt(n));
 
 	}
 
